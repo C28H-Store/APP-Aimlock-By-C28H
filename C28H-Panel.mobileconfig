@@ -8,7 +8,6 @@
     <key>PayloadContent</key>
     <array>
         <dict>
-
             <key>FullScreen</key>
             <true/>
 
@@ -41,7 +40,6 @@
 
             <key>URL</key>
             <string>https://c28h-store.github.io/APP-Aimlock-By-C28H/</string>
-
         </dict>
     </array>
 
