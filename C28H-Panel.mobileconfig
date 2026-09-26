@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<plist version="1.0">
+<dict>
+
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+
+            <key>FullScreen</key>
+            <true/>
+
+            <key>IsRemovable</key>
+            <true/>
+
+            <key>Label</key>
+            <string>C28H Panel</string>
+
+            <key>PayloadDescription</key>
+            <string>C28H Panel Web Clip</string>
+
+            <key>PayloadDisplayName</key>
+            <string>C28H Panel</string>
+
+            <key>PayloadIdentifier</key>
+            <string>com.c28h.panel.webclip</string>
+
+            <key>PayloadOrganization</key>
+            <string>C28H</string>
+
+            <key>PayloadType</key>
+            <string>com.apple.webClip.managed</string>
+
+            <key>PayloadUUID</key>
+            <string>8B8C7A1E-4F35-4E8A-9C28-000000000001</string>
+
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+
+            <key>URL</key>
+            <string>https://USERNAME.github.io/c28h-panel/</string>
+
+        </dict>
+    </array>
+
+    <key>PayloadDescription</key>
+    <string>C28H Panel</string>
+
+    <key>PayloadDisplayName</key>
+    <string>C28H Panel</string>
+
+    <key>PayloadIdentifier</key>
+    <string>com.c28h.panel</string>
+
+    <key>PayloadOrganization</key>
+    <string>C28H</string>
+
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+
+    <key>PayloadType</key>
+    <string>Configuration</string>
+
+    <key>PayloadUUID</key>
+    <string>8B8C7A1E-4F35-4E8A-9C28-000000000000</string>
+
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+
+</dict>
+</plist>
