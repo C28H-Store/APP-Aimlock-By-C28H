@@ -1,193 +1,498 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>C28H Panel</title>
-    
-    <style>
-        /* CSS MÀN HÌNH KHÓA BẢO MẬT */
-        #key-lock-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #0d0d11;
-            color: #ffffff;
-            z-index: 9999999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        .lock-card {
-            background: #16161e;
-            padding: 30px 20px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            width: 100%;
-            max-width: 340px;
-            text-align: center;
-            border: 1px solid #2a2a3a;
-        }
+<title>C28H Panel</title>
 
-        .lock-card h2 {
-            margin-top: 0;
-            color: #00ffcc;
-            font-size: 24px;
-            letter-spacing: 1px;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        .lock-card p {
-            font-size: 13px;
-            color: #a0a0b0;
-            margin-bottom: 15px;
-        }
+body {
+    margin: 0;
+    background: #07100b;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
 
-        .lock-card input {
-            width: 90%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #3a3a4c;
-            background: #0d0d11;
-            color: #00ffcc;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            outline: none;
-            box-sizing: border-box;
-        }
+/* ======================================================= */
+/* STYLES MÀN HÌNH KHÓA KEY BẢO MẬT                        */
+/* ======================================================= */
+#key-lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #07100b;
+    color: #ffffff;
+    z-index: 9999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-        .lock-card button {
-            width: 90%;
-            padding: 12px;
-            background: linear-gradient(135deg, #00c853, #00e676);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
-        }
+.lock-card {
+    background: #101a14;
+    padding: 30px 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    border: 1px solid #203326;
+}
 
-        .lock-card button:active {
-            opacity: 0.8;
-            transform: scale(0.98);
-        }
+.lock-card h2 {
+    margin-top: 0;
+    color: #39e86f;
+    font-size: 24px;
+    letter-spacing: 1px;
+    font-weight: 900;
+}
 
-        #key-error-msg {
-            color: #ff5252;
-            font-size: 13px;
-            margin-top: 12px;
-            min-height: 18px;
-            font-weight: 500;
-        }
-    </style>
+.lock-card p {
+    font-size: 13px;
+    color: #78847c;
+    margin-bottom: 18px;
+}
+
+.lock-card input {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 1px solid #304136;
+    background: #0e1712;
+    color: #39e86f;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    outline: none;
+}
+
+.lock-card input::placeholder {
+    color: #526058;
+    font-weight: normal;
+}
+
+.lock-card button {
+    width: 100%;
+    height: 48px;
+    background: #39e86f;
+    color: #07100b;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.lock-card button:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+#key-error-msg {
+    color: #ff5252;
+    font-size: 13px;
+    margin-top: 12px;
+    min-height: 18px;
+    font-weight: 600;
+}
+
+/* ======================================================= */
+/* STYLES PANEL GỐC CỦA BẠN                                */
+/* ======================================================= */
+.header {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #101a14;
+    border-bottom: 1px solid #203326;
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    margin: auto;
+    padding: 28px 18px 40px;
+}
+
+.logo {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 900;
+    color: #39e86f;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #78847c;
+    font-size: 13px;
+    margin-top: 7px;
+    margin-bottom: 28px;
+}
+
+.section-title {
+    color: #aeb8b1;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 20px 0 10px;
+}
+
+.version-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.version {
+    height: 62px;
+    border-radius: 15px;
+    border: 1px solid #304136;
+    background: #111a15;
+    color: #dfe7e2;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.version.active {
+    color: #ffffff;
+    border-color: #39e86f;
+    background: #14281b;
+    box-shadow: 0 0 12px rgba(57,232,111,.12);
+}
+
+.dpi-input {
+    width: 100%;
+    height: 56px;
+    border: 1px solid #304136;
+    border-radius: 14px;
+    outline: none;
+    background: #0e1712;
+    color: #ffffff;
+    padding: 0 16px;
+    font-size: 18px;
+}
+
+.dpi-input:focus {
+    border-color: #39e86f;
+    box-shadow: 0 0 0 2px rgba(57,232,111,.10);
+}
+
+.hint {
+    margin-top: 7px;
+    color: #68756c;
+    font-size: 12px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #101813;
+    border: 1px solid #253229;
+    border-radius: 16px;
+    padding: 15px 15px;
+    margin-top: 10px;
+}
+
+.option-name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.option-desc {
+    margin-top: 4px;
+    color: #6f7b73;
+    font-size: 12px;
+}
+
+.toggle {
+    width: 56px;
+    height: 32px;
+    border: none;
+    border-radius: 20px;
+    background: #354139;
+    padding: 3px;
+    transition: .2s;
+}
+
+.toggle::after {
+    content: "";
+    display: block;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: white;
+    transition: .2s;
+}
+
+.toggle.on {
+    background: #39e86f;
+}
+
+.toggle.on::after {
+    transform: translateX(24px);
+}
+
+.footer {
+    text-align: center;
+    color: #526058;
+    font-size: 11px;
+    margin-top: 28px;
+}
+</style>
 </head>
+
 <body>
 
-    <!-- ======================================================= -->
-    <!-- 1. MÀN HÌNH KHÓA KEY (TỰ ĐỘNG ẨN KHI NHẬP ĐÚNG KEY)       -->
-    <!-- ======================================================= -->
-    <div id="key-lock-screen">
-        <div class="lock-card">
-            <h2>C28H PANEL</h2>
-            <p>Vui lòng nhập Key để mở ứng dụng</p>
-            <input type="text" id="user-key-input" placeholder="c28hstore-key..." autocomplete="off" spellcheck="false">
-            <button onclick="validateKey()">KÍCH HOẠT</button>
-            <div id="key-error-msg"></div>
+<!-- ======================================================= -->
+<!-- 1. MÀN HÌNH KHÓA KEY BẢO MẬT                            -->
+<!-- ======================================================= -->
+<div id="key-lock-screen">
+    <div class="lock-card">
+        <h2>C28H PANEL</h2>
+        <p>Vui lòng nhập Key để mở ứng dụng</p>
+        <input type="text" id="user-key-input" placeholder="c28hstore-key..." autocomplete="off" spellcheck="false">
+        <button onclick="validateKey()">KÍCH HOẠT</button>
+        <div id="key-error-msg"></div>
+    </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- 2. GIAO DIỆN PANEL GỐC CỦA BẠN                          -->
+<!-- ======================================================= -->
+<div class="header">
+    C28H Panel
+</div>
+
+<div class="container">
+
+    <div class="logo">
+        C28H PANEL
+    </div>
+
+    <div class="subtitle">
+        C28H Store • Panel UI
+    </div>
+
+    <div class="section-title">
+        Chọn phiên bản
+    </div>
+
+    <div class="version-box">
+        <button class="version active" onclick="selectVersion(this)">
+            🎮 FF THG
+        </button>
+
+        <button class="version" onclick="selectVersion(this)">
+            🎮 FF MAX
+        </button>
+    </div>
+
+    <div class="section-title">
+        DPI
+    </div>
+
+    <input
+        id="dpi"
+        class="dpi-input"
+        type="number"
+        inputmode="numeric"
+        min="0"
+        max="600"
+        step="1"
+        placeholder="Nhập DPI (0 - 600)"
+        oninput="limitDPI(this)"
+    >
+
+    <div class="hint">
+        Chỉ nhập số • Giá trị tối đa: 600
+    </div>
+
+    <div class="option">
+        <div>
+            <div class="option-name">
+                🎯 Aimlock
+            </div>
+            <div class="option-desc">
+                Trạng thái giao diện
+            </div>
         </div>
+        <button class="toggle" onclick="toggle(this)"></button>
     </div>
 
-    <!-- ======================================================= -->
-    <!-- 2. KHU VỰC GIAO DIỆN PANEL GỐC CỦA BẠN                   -->
-    <!-- ======================================================= -->
-    <div id="main-app-content">
-
-        <!-- BẠN DÁN CODE HTML PANEL AIMLOCK GỐC VÀO ĐÂY -->
-
+    <div class="option">
+        <div>
+            <div class="option-name">
+                📌 Ghim tâm
+            </div>
+            <div class="option-desc">
+                Trạng thái giao diện
+            </div>
+        </div>
+        <button class="toggle" onclick="toggle(this)"></button>
     </div>
 
-    <!-- ======================================================= -->
-    <!-- 3. BỘ XÁC THỰC VÀ LIÊN KẾT KEY TỰ ĐỘNG                    -->
-    <!-- ======================================================= -->
-    <script>
-        // Bảng quy định thời gian sống của từng loại Key (tính bằng Giây)
-        const KEY_DURATIONS = {
-            'keygio': 3600,         // 1 Giờ
-            'keyngay': 86400,       // 24 Giờ
-            'keytuan': 604800,      // 7 Ngày
-            'keythang': 2592000,    // 30 Ngày
-            'keyvv': 3153600000     // Vĩnh Viễn (100 Năm)
-        };
+    <div class="option">
+        <div>
+            <div class="option-name">
+                〰 Fix rung
+            </div>
+            <div class="option-desc">
+                Trạng thái giao diện
+            </div>
+        </div>
+        <button class="toggle" onclick="toggle(this)"></button>
+    </div>
 
-        // Thuật toán kiểm tra Key hợp lệ được xuất từ web getkey.html
-        function verifyKeyFormat(key) {
-            const formattedKey = key.trim().toLowerCase();
-            // Cú pháp chuẩn: c28hstore-(loại key)-(5 ký tự ngẫu nhiên)
-            const regex = /^c28hstore-(keygio|keyngay|keytuan|keythang|keyvv)-([a-z0-9]{5})$/;
-            const match = formattedKey.match(regex);
+    <div class="option">
+        <div>
+            <div class="option-name">
+                ⚡ Tối ưu máy
+            </div>
+            <div class="option-desc">
+                Trạng thái giao diện
+            </div>
+        </div>
+        <button class="toggle" onclick="toggle(this)"></button>
+    </div>
 
-            if (match) {
-                const keyType = match[1];
-                return KEY_DURATIONS[keyType] || null;
-            }
-            return null;
+    <div class="option">
+        <div>
+            <div class="option-name">
+                ↗️ Fix lố
+            </div>
+            <div class="option-desc">
+                Trạng thái giao diện
+            </div>
+        </div>
+        <button class="toggle" onclick="toggle(this)"></button>
+    </div>
+
+    <div class="option">
+        <div>
+            <div class="option-name">
+                🔥 Bám đầu
+            </div>
+            <div class="option-desc">
+                Trạng thái giao diện
+            </div>
+        </div>
+        <button class="toggle" onclick="toggle(this)"></button>
+    </div>
+
+    <div class="footer">
+        C28H Panel • UI Demo
+    </div>
+
+</div>
+
+<!-- ======================================================= -->
+<!-- 3. SCRIPT XỬ LÝ LOGIC PANEL & BẢO MẬT KEY                -->
+<!-- ======================================================= -->
+<script>
+// ---------- SCRIPT PANEL GỐC CỦA BẠN ----------
+function limitDPI(input) {
+    let value = input.value;
+    value = value.replace(/[^0-9]/g, "");
+    if (value === "") {
+        input.value = "";
+        return;
+    }
+    let number = parseInt(value);
+    if (number > 600) {
+        number = 600;
+    }
+    input.value = number;
+}
+
+function toggle(button) {
+    button.classList.toggle("on");
+}
+
+function selectVersion(button) {
+    document.querySelectorAll(".version").forEach(function(item) {
+        item.classList.remove("active");
+    });
+    button.classList.add("active");
+}
+
+// ---------- SCRIPT XÁC THỰC KEY TỰ ĐỘNG ----------
+const KEY_DURATIONS = {
+    'keygio': 3600,         // 1 Giờ
+    'keyngay': 86400,       // 24 Giờ
+    'keytuan': 604800,      // 7 Ngày
+    'keythang': 2592000,    // 30 Ngày
+    'keyvv': 3153600000     // Vĩnh viễn (100 Năm)
+};
+
+function verifyKeyFormat(key) {
+    const formattedKey = key.trim().toLowerCase();
+    const regex = /^c28hstore-(keygio|keyngay|keytuan|keythang|keyvv)-([a-z0-9]{5})$/;
+    const match = formattedKey.match(regex);
+
+    if (match) {
+        const keyType = match[1];
+        return KEY_DURATIONS[keyType] || null;
+    }
+    return null;
+}
+
+function checkAppLockState() {
+    const expiryTime = localStorage.getItem("c28h_panel_key_expiry");
+    
+    if (expiryTime) {
+        if (Date.now() > parseInt(expiryTime)) {
+            localStorage.removeItem("c28h_panel_key_expiry");
+            document.getElementById("key-error-msg").innerText = "Key của bạn đã hết hạn!";
+            document.getElementById("key-lock-screen").style.display = "flex";
+        } else {
+            document.getElementById("key-lock-screen").style.display = "none";
         }
+    } else {
+        document.getElementById("key-lock-screen").style.display = "flex";
+    }
+}
 
-        // Kiểm tra xem máy đã lưu Key hợp lệ và còn thời hạn hay không
-        function checkAppLockState() {
-            const expiryTime = localStorage.getItem("c28h_panel_key_expiry");
-            
-            if (expiryTime) {
-                if (Date.now() > parseInt(expiryTime)) {
-                    // Khi hết thời gian: Tự động xóa Key và khóa ứng dụng lại
-                    localStorage.removeItem("c28h_panel_key_expiry");
-                    document.getElementById("key-error-msg").innerText = "Key của bạn đã hết hạn!";
-                    document.getElementById("key-lock-screen").style.display = "flex";
-                } else {
-                    // Mở giao diện Panel cho người dùng thao tác
-                    document.getElementById("key-lock-screen").style.display = "none";
-                }
-            } else {
-                // Chưa kích hoạt: Bắt buộc hiện màn hình khóa
-                document.getElementById("key-lock-screen").style.display = "flex";
-            }
-        }
+function validateKey() {
+    const inputKey = document.getElementById("user-key-input").value;
+    const errorElement = document.getElementById("key-error-msg");
+    
+    const durationInSeconds = verifyKeyFormat(inputKey);
 
-        // Xử lý khi nhấn nút KÍCH HOẠT
-        function validateKey() {
-            const inputKey = document.getElementById("user-key-input").value;
-            const errorElement = document.getElementById("key-error-msg");
-            
-            const durationInSeconds = verifyKeyFormat(inputKey);
+    if (durationInSeconds) {
+        const expiryTimestamp = Date.now() + (durationInSeconds * 1000);
+        localStorage.setItem("c28h_panel_key_expiry", expiryTimestamp);
+        
+        errorElement.innerText = "";
+        document.getElementById("key-lock-screen").style.display = "none";
+    } else {
+        errorElement.innerText = "Key không đúng hoặc nhập sai!";
+    }
+}
 
-            if (durationInSeconds) {
-                // Tính thời điểm hết hạn và lưu vào hệ thống thiết bị
-                const expiryTimestamp = Date.now() + (durationInSeconds * 1000);
-                localStorage.setItem("c28h_panel_key_expiry", expiryTimestamp);
-                
-                errorElement.innerText = "";
-                // Mở khóa ứng dụng ngay lập tức
-                document.getElementById("key-lock-screen").style.display = "none";
-            } else {
-                // Nhập sai hoặc không đúng cấu trúc
-                errorElement.innerText = "Key sai hoặc không tồn tại!";
-            }
-        }
+// Kiểm tra ngay khi khởi chạy
+checkAppLockState();
 
-        // Kiểm tra trạng thái ngay khi khởi chạy WebClip
-        checkAppLockState();
+// Tự động kiểm tra liên tục mỗi 5 giây
+setInterval(checkAppLockState, 5000);
+</script>
 
-        // Kiểm tra định kỳ mỗi 5 giây (Tự động out nếu hết giờ khi đang dùng)
-        setInterval(checkAppLockState, 5000);
-    </script>
 </body>
 </html>
