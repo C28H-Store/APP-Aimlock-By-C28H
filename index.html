@@ -103,12 +103,6 @@
             font-size: 12px;
             color: #888899;
         }
-
-        .contact-admin a {
-            color: #00ffcc;
-            text-decoration: none;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -125,27 +119,26 @@
             <div id="key-error-msg"></div>
             
             <div class="contact-admin">
-                Chưa có Key? Liên hệ Admin để lấy Key:<br>
-                Zalo/Telegram: <b>C28H Store</b>
+                Liên hệ Admin để nhận Key kích hoạt
             </div>
         </div>
     </div>
 
     <!-- ======================================================= -->
     <!-- 2. NỘI DUNG GỐC TRANG WEB CỦA BẠN                       -->
-    <!-- (Nếu bạn có thêm mã HTML giao diện panel, dán vào đây)   -->
+    <!-- (Bạn dán giao diện menu, panel của bạn vào đây)          -->
     <!-- ======================================================= -->
     <div style="text-align: center; padding: 50px 20px; font-family: sans-serif;">
         <h1 style="color: #00ffcc;">C28H PANEL ACTIVATED</h1>
-        <p>Chào mừng bạn đã vào thành công ứng dụng!</p>
+        <p>Đã kích hoạt ứng dụng thành công!</p>
     </div>
 
 
     <!-- ======================================================= -->
-    <!-- 3. HỆ THỐNG KIỂM TRA & XÁC THỰC KEY TỰ ĐỘNG              -->
+    <!-- 3. HỆ THỐNG KIỂM TRA & XÁC THỰC KEY CHÍNH XÁC            -->
     <!-- ======================================================= -->
     <script>
-        // Thời gian hiệu lực tính bằng Giây
+        // Bảng thời gian hiệu lực (Tính theo Giây)
         const DURATION_MAP = {
             'keygio': 3600,         // 1 Giờ
             'keyngay': 86400,       // 24 Giờ
@@ -154,18 +147,23 @@
             'keyvv': 3153600000     // 100 Năm
         };
 
-        // Kiểm tra định dạng Key bằng Thuật toán
+        // Thuật toán tách và kiểm tra tính hợp lệ của Key
         function parseKey(keyStr) {
-            const regex = /^c28hstore-(keygio|keyngay|keytuan|keythang|keyvv)-([a-z0-9]{5})$/i;
-            const match = keyStr.match(regex);
+            // Chuẩn hóa chuỗi: xóa khoảng trắng, chuyển về chữ thường
+            const cleanKey = keyStr.trim().toLowerCase();
+            
+            // Regex kiểm tra định dạng c28hstore-[loại key]-[5 ký tự bất kỳ]
+            const regex = /^c28hstore-(keygio|keyngay|keytuan|keythang|keyvv)-([a-z0-9]{5})$/;
+            const match = cleanKey.match(regex);
+            
             if (match) {
-                const type = match[1].toLowerCase();
-                return DURATION_MAP[type] || null;
+                const keyType = match[1];
+                return DURATION_MAP[keyType] || null;
             }
             return null;
         }
 
-        // Kiểm tra hạn sử dụng của Key
+        // Kiểm tra xem Key đã lưu trong máy còn hạn không
         function checkExpiration() {
             const expiryTime = localStorage.getItem("c28h_key_expiry");
             if (expiryTime) {
@@ -181,10 +179,11 @@
             }
         }
 
-        // Xử lý khi nhấn nút KÍCH HOẠT
+        // Xử lý khi bấm nút KÍCH HOẠT
         function validateKey() {
-            const inputKey = document.getElementById("user-key-input").value.trim();
+            const inputKey = document.getElementById("user-key-input").value;
             const errorMsg = document.getElementById("key-error-msg");
+            
             const duration = parseKey(inputKey);
 
             if (duration) {
@@ -193,14 +192,14 @@
                 errorMsg.innerText = "";
                 document.getElementById("key-lock-screen").style.display = "none";
             } else {
-                errorMsg.innerText = "Key không hợp lệ hoặc sai cú pháp!";
+                errorMsg.innerText = "Key không đúng định dạng hoặc bị thừa khoảng trắng!";
             }
         }
 
-        // Chạy kiểm tra ngay khi mở ứng dụng
+        // Kiểm tra ngay khi tải trang
         checkExpiration();
 
-        // Tự động kiểm tra liên tục mỗi 5 giây (hết hạn sẽ tự thoát ra màn hình khóa)
+        // Kiểm tra định kỳ mỗi 5 giây
         setInterval(checkExpiration, 5000);
     </script>
 </body>
