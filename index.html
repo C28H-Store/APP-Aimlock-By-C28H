@@ -7,7 +7,7 @@
     
     <style>
         /* ======================================================= */
-        /* STYLES DÀNH RIÊNG CHO MÀN HÌNH KHÓA KEY (THÊM MỚI)       */
+        /* STYLES MÀN HÌNH KHÓA KEY & BẢO MẬT                       */
         /* ======================================================= */
         #key-lock-screen {
             position: fixed;
@@ -15,7 +15,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #0d0d0d;
+            background: #0d0d11;
             color: #ffffff;
             z-index: 9999999;
             display: flex;
@@ -28,153 +28,179 @@
         }
 
         .lock-card {
-            background: #1a1a1a;
+            background: #16161e;
             padding: 30px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
             text-align: center;
-            border: 1px solid #333;
+            border: 1px solid #2a2a3a;
         }
 
         .lock-card h2 {
             margin-top: 0;
             color: #00ffcc;
-            font-size: 22px;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .lock-card p {
+            font-size: 13px;
+            color: #a0a0b0;
+            margin-bottom: 15px;
         }
 
         .lock-card input {
             width: 90%;
             padding: 12px;
-            margin: 15px 0;
-            border-radius: 6px;
-            border: 1px solid #444;
-            background: #252525;
-            color: #fff;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #3a3a4c;
+            background: #0d0d11;
+            color: #00ffcc;
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
+            font-weight: bold;
             outline: none;
+        }
+
+        .lock-card input::placeholder {
+            color: #555566;
+            font-weight: normal;
         }
 
         .lock-card button {
             width: 90%;
             padding: 12px;
-            background-color: #28a745;
-            color: #fff;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: #000;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 230, 118, 0.3);
         }
 
         .lock-card button:active {
             opacity: 0.8;
+            transform: scale(0.98);
         }
 
         #key-error-msg {
-            color: #ff4d4d;
-            font-size: 14px;
+            color: #ff5252;
+            font-size: 13px;
             margin-top: 12px;
             min-height: 18px;
+            font-weight: 500;
+        }
+
+        .contact-admin {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #2a2a3a;
+            font-size: 12px;
+            color: #888899;
+        }
+
+        .contact-admin a {
+            color: #00ffcc;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
     <!-- ======================================================= -->
-    <!-- 1. MÀN HÌNH KHÓA KEY (THÊM MỚI)                          -->
+    <!-- 1. MÀN HÌNH KHÓA KEY (YÊU CẦU NHẬP KEY)                 -->
     <!-- ======================================================= -->
     <div id="key-lock-screen">
         <div class="lock-card">
-            <h2>C28H Panel</h2>
-            <p style="font-size: 14px; color: #aaa; margin-bottom: 5px;">Yêu cầu kích hoạt Key để tiếp tục</p>
-            <input type="text" id="user-key-input" placeholder="Nhập Key tại đây..." autocomplete="off" spellcheck="false">
+            <h2>C28H PANEL</h2>
+            <p>Vui lòng nhập Key để tiếp tục sử dụng</p>
+            <input type="text" id="user-key-input" placeholder="c28hstore-key..." autocomplete="off" spellcheck="false">
             <button onclick="validateKey()">KÍCH HOẠT</button>
             <div id="key-error-msg"></div>
+            
+            <div class="contact-admin">
+                Chưa có Key? Liên hệ Admin để lấy Key:<br>
+                Zalo/Telegram: <b>C28H Store</b>
+            </div>
         </div>
     </div>
 
     <!-- ======================================================= -->
-    <!-- 2. NỘI DUNG GỐC TRANG WEB CỦA BẠN (GIỮ NGUYÊN 100%)       -->
-    <!-- (Bạn có thể dán toàn bộ code body gốc của bạn vào dưới dòng này) -->
+    <!-- 2. NỘI DUNG GỐC TRANG WEB CỦA BẠN                       -->
+    <!-- (Nếu bạn có thêm mã HTML giao diện panel, dán vào đây)   -->
     <!-- ======================================================= -->
-
-    
+    <div style="text-align: center; padding: 50px 20px; font-family: sans-serif;">
+        <h1 style="color: #00ffcc;">C28H PANEL ACTIVATED</h1>
+        <p>Chào mừng bạn đã vào thành công ứng dụng!</p>
+    </div>
 
 
     <!-- ======================================================= -->
-    <!-- 3. HỆ THỐNG XỬ LÝ CHECK KEY & THỜI GIAN (THÊM MỚI)       -->
+    <!-- 3. HỆ THỐNG KIỂM TRA & XÁC THỰC KEY TỰ ĐỘNG              -->
     <!-- ======================================================= -->
     <script>
-        // Danh sách các Key hợp lệ và thời hạn (tính bằng Giây)
-        const VALID_KEYS = {
-            // Key Giờ (3600s = 1 Giờ)
-            "c28hstore-keygio-a1b2c": 3600,
-            "c28hstore-keygio-d3e4f": 3600,
-            "c28hstore-keygio-g5h6i": 3600,
-
-            // Key Ngày (86400s = 24 Giờ)
-            "c28hstore-keyngay-j7k8l": 86400,
-            "c28hstore-keyngay-m9n0p": 86400,
-            "c28hstore-keyngay-q1r2s": 86400,
-
-            // Key Tuần (604800s = 7 Ngày)
-            "c28hstore-keytuan-t3u4v": 604800,
-            "c28hstore-keytuan-w5x6y": 604800,
-
-            // Key Tháng (2592000s = 30 Ngày)
-            "c28hstore-keythang-z7a8b": 2592000,
-            "c28hstore-keythang-c9d0e": 2592000,
-
-            // Key Vĩnh Viễn (3153600000s ~ 100 Năm)
-            "c28hstore-keyvv-f1g2h": 3153600000,
-            "c28hstore-keyvv-i3j4k": 3153600000
+        // Thời gian hiệu lực tính bằng Giây
+        const DURATION_MAP = {
+            'keygio': 3600,         // 1 Giờ
+            'keyngay': 86400,       // 24 Giờ
+            'keytuan': 604800,      // 7 Ngày
+            'keythang': 2592000,    // 30 Ngày
+            'keyvv': 3153600000     // 100 Năm
         };
 
-        // Hàm kiểm tra thời hạn sử dụng của Key
+        // Kiểm tra định dạng Key bằng Thuật toán
+        function parseKey(keyStr) {
+            const regex = /^c28hstore-(keygio|keyngay|keytuan|keythang|keyvv)-([a-z0-9]{5})$/i;
+            const match = keyStr.match(regex);
+            if (match) {
+                const type = match[1].toLowerCase();
+                return DURATION_MAP[type] || null;
+            }
+            return null;
+        }
+
+        // Kiểm tra hạn sử dụng của Key
         function checkExpiration() {
             const expiryTime = localStorage.getItem("c28h_key_expiry");
             if (expiryTime) {
                 if (Date.now() > parseInt(expiryTime)) {
-                    // Khi hết hạn -> Xóa lưu trữ & Bắt buộc khóa trang web lại
                     localStorage.removeItem("c28h_key_expiry");
                     document.getElementById("key-error-msg").innerText = "Key của bạn đã hết hạn!";
                     document.getElementById("key-lock-screen").style.display = "flex";
                 } else {
-                    // Key còn hạn -> Mở khóa trang web
                     document.getElementById("key-lock-screen").style.display = "none";
                 }
             } else {
-                // Chưa nhập key -> Mở màn hình khóa
                 document.getElementById("key-lock-screen").style.display = "flex";
             }
         }
 
-        // Hàm xử lý kích hoạt Key
+        // Xử lý khi nhấn nút KÍCH HOẠT
         function validateKey() {
             const inputKey = document.getElementById("user-key-input").value.trim();
             const errorMsg = document.getElementById("key-error-msg");
+            const duration = parseKey(inputKey);
 
-            if (VALID_KEYS[inputKey]) {
-                const durationInSeconds = VALID_KEYS[inputKey];
-                const expiryTimestamp = Date.now() + (durationInSeconds * 1000);
-                
-                // Lưu thời gian hết hạn vào máy
+            if (duration) {
+                const expiryTimestamp = Date.now() + (duration * 1000);
                 localStorage.setItem("c28h_key_expiry", expiryTimestamp);
-                
                 errorMsg.innerText = "";
                 document.getElementById("key-lock-screen").style.display = "none";
             } else {
-                errorMsg.innerText = "Key không chính xác!";
+                errorMsg.innerText = "Key không hợp lệ hoặc sai cú pháp!";
             }
         }
 
-        // Thực thi kiểm tra ngay lập tức khi load trang
+        // Chạy kiểm tra ngay khi mở ứng dụng
         checkExpiration();
 
-        // Tự động kiểm tra mỗi 5 giây (khi vừa hết thời gian key sẽ lập tức tự out/khóa lại)
+        // Tự động kiểm tra liên tục mỗi 5 giây (hết hạn sẽ tự thoát ra màn hình khóa)
         setInterval(checkExpiration, 5000);
     </script>
 </body>
