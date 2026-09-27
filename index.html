@@ -6,9 +6,7 @@
     <title>C28H Panel</title>
     
     <style>
-        /* ======================================================= */
-        /* STYLES MÀN HÌNH KHÓA KEY & BẢO MẬT                       */
-        /* ======================================================= */
+        /* CSS MÀN HÌNH KHÓA BẢO MẬT */
         #key-lock-screen {
             position: fixed;
             top: 0;
@@ -24,7 +22,7 @@
             justify-content: center;
             padding: 20px;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         .lock-card {
@@ -63,11 +61,7 @@
             font-size: 14px;
             font-weight: bold;
             outline: none;
-        }
-
-        .lock-card input::placeholder {
-            color: #555566;
-            font-weight: normal;
+            box-sizing: border-box;
         }
 
         .lock-card button {
@@ -95,112 +89,105 @@
             min-height: 18px;
             font-weight: 500;
         }
-
-        .contact-admin {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #2a2a3a;
-            font-size: 12px;
-            color: #888899;
-        }
     </style>
 </head>
 <body>
 
     <!-- ======================================================= -->
-    <!-- 1. MÀN HÌNH KHÓA KEY (YÊU CẦU NHẬP KEY)                 -->
+    <!-- 1. MÀN HÌNH KHÓA KEY (TỰ ĐỘNG ẨN KHI NHẬP ĐÚNG KEY)       -->
     <!-- ======================================================= -->
     <div id="key-lock-screen">
         <div class="lock-card">
             <h2>C28H PANEL</h2>
-            <p>Vui lòng nhập Key để tiếp tục sử dụng</p>
+            <p>Vui lòng nhập Key để mở ứng dụng</p>
             <input type="text" id="user-key-input" placeholder="c28hstore-key..." autocomplete="off" spellcheck="false">
             <button onclick="validateKey()">KÍCH HOẠT</button>
             <div id="key-error-msg"></div>
-            
-            <div class="contact-admin">
-                Liên hệ Admin để nhận Key kích hoạt
-            </div>
         </div>
     </div>
 
     <!-- ======================================================= -->
-    <!-- 2. NỘI DUNG GỐC TRANG WEB CỦA BẠN                       -->
-    <!-- (Bạn dán giao diện menu, panel của bạn vào đây)          -->
+    <!-- 2. KHU VỰC GIAO DIỆN PANEL GỐC CỦA BẠN                   -->
     <!-- ======================================================= -->
-    <div style="text-align: center; padding: 50px 20px; font-family: sans-serif;">
-        <h1 style="color: #00ffcc;">C28H PANEL ACTIVATED</h1>
-        <p>Đã kích hoạt ứng dụng thành công!</p>
+    <div id="main-app-content">
+
+        <!-- BẠN DÁN CODE HTML PANEL AIMLOCK GỐC VÀO ĐÂY -->
+
     </div>
 
-
     <!-- ======================================================= -->
-    <!-- 3. HỆ THỐNG KIỂM TRA & XÁC THỰC KEY CHÍNH XÁC            -->
+    <!-- 3. BỘ XÁC THỰC VÀ LIÊN KẾT KEY TỰ ĐỘNG                    -->
     <!-- ======================================================= -->
     <script>
-        // Bảng thời gian hiệu lực (Tính theo Giây)
-        const DURATION_MAP = {
+        // Bảng quy định thời gian sống của từng loại Key (tính bằng Giây)
+        const KEY_DURATIONS = {
             'keygio': 3600,         // 1 Giờ
             'keyngay': 86400,       // 24 Giờ
             'keytuan': 604800,      // 7 Ngày
             'keythang': 2592000,    // 30 Ngày
-            'keyvv': 3153600000     // 100 Năm
+            'keyvv': 3153600000     // Vĩnh Viễn (100 Năm)
         };
 
-        // Thuật toán tách và kiểm tra tính hợp lệ của Key
-        function parseKey(keyStr) {
-            // Chuẩn hóa chuỗi: xóa khoảng trắng, chuyển về chữ thường
-            const cleanKey = keyStr.trim().toLowerCase();
-            
-            // Regex kiểm tra định dạng c28hstore-[loại key]-[5 ký tự bất kỳ]
+        // Thuật toán kiểm tra Key hợp lệ được xuất từ web getkey.html
+        function verifyKeyFormat(key) {
+            const formattedKey = key.trim().toLowerCase();
+            // Cú pháp chuẩn: c28hstore-(loại key)-(5 ký tự ngẫu nhiên)
             const regex = /^c28hstore-(keygio|keyngay|keytuan|keythang|keyvv)-([a-z0-9]{5})$/;
-            const match = cleanKey.match(regex);
-            
+            const match = formattedKey.match(regex);
+
             if (match) {
                 const keyType = match[1];
-                return DURATION_MAP[keyType] || null;
+                return KEY_DURATIONS[keyType] || null;
             }
             return null;
         }
 
-        // Kiểm tra xem Key đã lưu trong máy còn hạn không
-        function checkExpiration() {
-            const expiryTime = localStorage.getItem("c28h_key_expiry");
+        // Kiểm tra xem máy đã lưu Key hợp lệ và còn thời hạn hay không
+        function checkAppLockState() {
+            const expiryTime = localStorage.getItem("c28h_panel_key_expiry");
+            
             if (expiryTime) {
                 if (Date.now() > parseInt(expiryTime)) {
-                    localStorage.removeItem("c28h_key_expiry");
+                    // Khi hết thời gian: Tự động xóa Key và khóa ứng dụng lại
+                    localStorage.removeItem("c28h_panel_key_expiry");
                     document.getElementById("key-error-msg").innerText = "Key của bạn đã hết hạn!";
                     document.getElementById("key-lock-screen").style.display = "flex";
                 } else {
+                    // Mở giao diện Panel cho người dùng thao tác
                     document.getElementById("key-lock-screen").style.display = "none";
                 }
             } else {
+                // Chưa kích hoạt: Bắt buộc hiện màn hình khóa
                 document.getElementById("key-lock-screen").style.display = "flex";
             }
         }
 
-        // Xử lý khi bấm nút KÍCH HOẠT
+        // Xử lý khi nhấn nút KÍCH HOẠT
         function validateKey() {
             const inputKey = document.getElementById("user-key-input").value;
-            const errorMsg = document.getElementById("key-error-msg");
+            const errorElement = document.getElementById("key-error-msg");
             
-            const duration = parseKey(inputKey);
+            const durationInSeconds = verifyKeyFormat(inputKey);
 
-            if (duration) {
-                const expiryTimestamp = Date.now() + (duration * 1000);
-                localStorage.setItem("c28h_key_expiry", expiryTimestamp);
-                errorMsg.innerText = "";
+            if (durationInSeconds) {
+                // Tính thời điểm hết hạn và lưu vào hệ thống thiết bị
+                const expiryTimestamp = Date.now() + (durationInSeconds * 1000);
+                localStorage.setItem("c28h_panel_key_expiry", expiryTimestamp);
+                
+                errorElement.innerText = "";
+                // Mở khóa ứng dụng ngay lập tức
                 document.getElementById("key-lock-screen").style.display = "none";
             } else {
-                errorMsg.innerText = "Key không đúng định dạng hoặc bị thừa khoảng trắng!";
+                // Nhập sai hoặc không đúng cấu trúc
+                errorElement.innerText = "Key sai hoặc không tồn tại!";
             }
         }
 
-        // Kiểm tra ngay khi tải trang
-        checkExpiration();
+        // Kiểm tra trạng thái ngay khi khởi chạy WebClip
+        checkAppLockState();
 
-        // Kiểm tra định kỳ mỗi 5 giây
-        setInterval(checkExpiration, 5000);
+        // Kiểm tra định kỳ mỗi 5 giây (Tự động out nếu hết giờ khi đang dùng)
+        setInterval(checkAppLockState, 5000);
     </script>
 </body>
 </html>
